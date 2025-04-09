@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Unfollower Analyzer</title>
+    <title>Instagram Unfollower Tracker</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -55,38 +55,80 @@
             cursor: pointer;
             display: block;
         }
+        .tab-active {
+            color: #833ab4;
+            border-bottom: 2px solid #833ab4;
+        }
     </style>
 </head>
 <body class="gradient-bg min-h-screen py-8 font-sans">
     <div class="container mx-auto px-4">
         <header class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-white mb-2">Instagram Unfollower Analyzer</h1>
-            <p class="text-white text-lg mb-6">Upload your followers and following JSON files to find who doesn't follow you back</p>
+            <h1 class="text-4xl font-bold text-white mb-2">Instagram Unfollower Tracker</h1>
+            <p class="text-white text-lg mb-6">Upload your followers and following data to find who doesn't follow you back</p>
         </header>
 
         <main>
             <div class="card p-6 mb-8">
                 <h2 class="text-2xl font-bold mb-4 text-gray-800">Upload Your Instagram Data</h2>
-                <div class="flex flex-col md:flex-row gap-6">
-                    <div class="flex-1">
-                        <label class="block text-gray-700 font-semibold mb-2">Followers JSON</label>
-                        <div class="file-upload flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
-                            <input type="file" id="followersFile" accept=".json" onchange="updateFileName(this, 'followersFileName')">
-                            <div class="text-center">
-                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
-                                <p class="text-gray-500 mb-1">Click or drag to upload followers.json</p>
-                                <p id="followersFileName" class="text-sm text-blue-500"></p>
+                
+                <!-- File Format Tabs -->
+                <div class="flex mb-6 border-b">
+                    <button id="jsonTabBtn" class="tab-active py-2 px-4 font-medium text-lg" onclick="switchTab('json')">JSON Format</button>
+                    <button id="htmlTabBtn" class="py-2 px-4 font-medium text-lg" onclick="switchTab('html')">HTML Format</button>
+                </div>
+                
+                <!-- JSON Upload Tab Content -->
+                <div id="jsonTab" class="tab-content">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="flex-1">
+                            <label class="block text-gray-700 font-semibold mb-2">Followers JSON</label>
+                            <div class="file-upload flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                                <input type="file" id="followersJsonFile" accept=".json" onchange="updateFileName(this, 'followersJsonFileName')">
+                                <div class="text-center">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                                    <p class="text-gray-500 mb-1">Click or drag to upload followers.json</p>
+                                    <p id="followersJsonFileName" class="text-sm text-blue-500"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <label class="block text-gray-700 font-semibold mb-2">Following JSON</label>
+                            <div class="file-upload flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                                <input type="file" id="followingJsonFile" accept=".json" onchange="updateFileName(this, 'followingJsonFileName')">
+                                <div class="text-center">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                                    <p class="text-gray-500 mb-1">Click or drag to upload following.json</p>
+                                    <p id="followingJsonFileName" class="text-sm text-blue-500"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-1">
-                        <label class="block text-gray-700 font-semibold mb-2">Following JSON</label>
-                        <div class="file-upload flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
-                            <input type="file" id="followingFile" accept=".json" onchange="updateFileName(this, 'followingFileName')">
-                            <div class="text-center">
-                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
-                                <p class="text-gray-500 mb-1">Click or drag to upload following.json</p>
-                                <p id="followingFileName" class="text-sm text-blue-500"></p>
+                </div>
+                
+                <!-- HTML Upload Tab Content -->
+                <div id="htmlTab" class="tab-content hidden">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="flex-1">
+                            <label class="block text-gray-700 font-semibold mb-2">Followers HTML</label>
+                            <div class="file-upload flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                                <input type="file" id="followersHtmlFile" accept=".html,.htm" onchange="updateFileName(this, 'followersHtmlFileName')">
+                                <div class="text-center">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                                    <p class="text-gray-500 mb-1">Click or drag to upload followers HTML</p>
+                                    <p id="followersHtmlFileName" class="text-sm text-blue-500"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <label class="block text-gray-700 font-semibold mb-2">Following HTML</label>
+                            <div class="file-upload flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                                <input type="file" id="followingHtmlFile" accept=".html,.htm" onchange="updateFileName(this, 'followingHtmlFileName')">
+                                <div class="text-center">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                                    <p class="text-gray-500 mb-1">Click or drag to upload following HTML</p>
+                                    <p id="followingHtmlFileName" class="text-sm text-blue-500"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -147,6 +189,28 @@
     </div>
 
     <script>
+        // Current active tab
+        let activeTab = 'json';
+        
+        // Switch between JSON and HTML tabs
+        function switchTab(tabName) {
+            // Update active tab
+            activeTab = tabName;
+            
+            // Update tab buttons
+            document.getElementById('jsonTabBtn').classList.toggle('tab-active', tabName === 'json');
+            document.getElementById('htmlTabBtn').classList.toggle('tab-active', tabName === 'html');
+            
+            // Show/hide content
+            document.getElementById('jsonTab').classList.toggle('hidden', tabName !== 'json');
+            document.getElementById('htmlTab').classList.toggle('hidden', tabName !== 'html');
+            
+            // Reset error message
+            const errorDiv = document.getElementById('error');
+            errorDiv.classList.add('hidden');
+            errorDiv.textContent = '';
+        }
+        
         // Helper function to update file name display
         function updateFileName(input, displayId) {
             const fileName = input.files[0]?.name || '';
@@ -155,18 +219,30 @@
         
         // Convert timestamp to human readable date
         function formatDate(timestamp) {
-            const date = new Date(timestamp * 1000);
-            return date.toLocaleDateString('id-ID', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            });
+            if (typeof timestamp === 'number') {
+                const date = new Date(timestamp * 1000);
+                return date.toLocaleDateString('id-ID', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            }
+            return timestamp; // If it's already a formatted date string
+        }
+        
+        // Parse date string from HTML files (e.g., "Feb 27, 2025 9:31 pm")
+        function parseHTMLDate(dateString) {
+            return dateString; // Keep as is for display
+        }
+        
+        // Extract username from Instagram URL
+        function extractUsername(url) {
+            const match = url.match(/instagram\.com\/([^\/]+)/);
+            return match ? match[1] : url;
         }
         
         // Main function to compare files and find unfollowers
         async function analyzeFiles() {
-            const followersFile = document.getElementById('followersFile').files[0];
-            const followingFile = document.getElementById('followingFile').files[0];
             const errorDiv = document.getElementById('error');
             const loader = document.getElementById('loader');
             
@@ -176,28 +252,65 @@
             document.getElementById('resultsCard').classList.add('hidden');
             document.getElementById('noResults').classList.add('hidden');
             
-            // Validate input files
-            if (!followersFile || !followingFile) {
-                errorDiv.textContent = 'Please upload both JSON files';
-                errorDiv.classList.remove('hidden');
-                return;
+            let followersData, followingData;
+            
+            // Validate input files and process based on active tab
+            if (activeTab === 'json') {
+                const followersFile = document.getElementById('followersJsonFile').files[0];
+                const followingFile = document.getElementById('followingJsonFile').files[0];
+                
+                if (!followersFile || !followingFile) {
+                    errorDiv.textContent = 'Please upload both JSON files';
+                    errorDiv.classList.remove('hidden');
+                    return;
+                }
+                
+                // Show loader
+                loader.style.display = 'block';
+                
+                try {
+                    // Read and parse the JSON files
+                    followersData = await readJSONFile(followersFile);
+                    followingData = await readJSONFile(followingFile);
+                } catch (error) {
+                    errorDiv.textContent = `Error: ${error.message}. Make sure your files are valid JSON format.`;
+                    errorDiv.classList.remove('hidden');
+                    loader.style.display = 'none';
+                    return;
+                }
+            } else { // HTML tab
+                const followersFile = document.getElementById('followersHtmlFile').files[0];
+                const followingFile = document.getElementById('followingHtmlFile').files[0];
+                
+                if (!followersFile || !followingFile) {
+                    errorDiv.textContent = 'Please upload both HTML files';
+                    errorDiv.classList.remove('hidden');
+                    return;
+                }
+                
+                // Show loader
+                loader.style.display = 'block';
+                
+                try {
+                    // Read and parse the HTML files
+                    followersData = await parseHTMLFile(followersFile);
+                    followingData = await parseHTMLFile(followingFile);
+                } catch (error) {
+                    errorDiv.textContent = `Error: ${error.message}. Make sure your files are valid HTML format.`;
+                    errorDiv.classList.remove('hidden');
+                    loader.style.display = 'none';
+                    return;
+                }
             }
             
-            // Show loader
-            loader.style.display = 'block';
-            
             try {
-                // Read and parse the files
-                const followersData = await readJSONFile(followersFile);
-                const followingData = await readJSONFile(followingFile);
-                
                 // Process the data
                 const unfollowers = findUnfollowers(followersData, followingData);
                 
                 // Display results
                 displayResults(unfollowers);
             } catch (error) {
-                errorDiv.textContent = `Error: ${error.message}. Make sure your files are valid JSON format.`;
+                errorDiv.textContent = `Error processing data: ${error.message}`;
                 errorDiv.classList.remove('hidden');
             } finally {
                 // Hide loader
@@ -227,13 +340,61 @@
             });
         }
         
+        // Helper function to parse HTML file and extract user data
+        function parseHTMLFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                
+                reader.onload = (event) => {
+                    try {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(event.target.result, 'text/html');
+                        
+                        // Extract user data from HTML
+                        const userElements = doc.querySelectorAll('div._a6-p');
+                        const users = [];
+                        
+                        userElements.forEach(userElement => {
+                            const linkElement = userElement.querySelector('a');
+                            const dateElement = userElement.querySelector('div > div > div:nth-child(2)');
+                            
+                            if (linkElement) {
+                                const href = linkElement.getAttribute('href');
+                                const username = extractUsername(href);
+                                const dateText = dateElement ? dateElement.textContent : '';
+                                
+                                users.push({
+                                    string_list_data: [{
+                                        href: href,
+                                        value: username,
+                                        timestamp: dateText
+                                    }]
+                                });
+                            }
+                        });
+                        
+                        resolve(users);
+                    } catch (error) {
+                        reject(new Error('Error parsing HTML content'));
+                    }
+                };
+                
+                reader.onerror = () => {
+                    reject(new Error('Error reading file'));
+                };
+                
+                reader.readAsText(file);
+            });
+        }
+        
         // Find users who you follow but don't follow you back
         function findUnfollowers(followersData, followingData) {
             // Extract usernames from followers
             const followerUsernames = new Set();
             
             // Handle both array format and object with relationships_following format
-            const followersArray = Array.isArray(followersData) ? followersData : [];
+            const followersArray = Array.isArray(followersData) ? followersData : 
+                                  (followersData.relationships_following ? followersData.relationships_following : []);
             
             followersArray.forEach(item => {
                 if (item.string_list_data && item.string_list_data.length > 0) {
@@ -285,8 +446,14 @@
             
             unfollowerCount.textContent = unfollowers.length;
             
-            // Sort unfollowers by most recent first
-            unfollowers.sort((a, b) => b.timestamp - a.timestamp);
+            // Sort unfollowers by most recent first (if numeric timestamps)
+            unfollowers.sort((a, b) => {
+                if (typeof a.timestamp === 'number' && typeof b.timestamp === 'number') {
+                    return b.timestamp - a.timestamp;
+                }
+                // If timestamps are strings, keep original order
+                return 0;
+            });
             
             // Populate table
             unfollowers.forEach((user, index) => {
