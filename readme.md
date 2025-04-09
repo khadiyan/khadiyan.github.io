@@ -3,7 +3,7 @@ A web interface that allows you to upload and compare your Instagram followers a
 
 ## Key Feaures
 
-* **Upload Interface:** Drag and drop or click to upload your followers.json and following.json files
+* **Upload Interface:** Drag and drop or click to upload your followers_1 and following files, both json anda html are supported
 * **Data Processing:** Compares both files to identify accounts that don't follow you back
 * **Results Display:** Shows unfollowers in a clean, sortable table with profile links
 * **Export Option:** Download results as CSV for further analysis
@@ -11,8 +11,8 @@ A web interface that allows you to upload and compare your Instagram followers a
 
 ## How to Use:
 
-* Upload your followers.json file (the first uploaded document in your request)
-* Upload your following.json file (the second uploaded document)
+* Upload your followers_1.json/html file (the first uploaded document in your request)
+* Upload your following./htmljson file (the second uploaded document)
 * Click "Find Unfollowers"
 * Review the list of accounts that don't follow you back
 * Click on profile links to visit the accounts or export the data as CSV
